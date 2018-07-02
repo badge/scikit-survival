@@ -68,7 +68,7 @@ def _write_header(data, fp, relation_name, index):
         name = attribute_names[column]
         fp.write("@attribute {0}\t".format(name))
 
-        if pandas.core.common.is_categorical_dtype(series) or pandas.core.common.is_object_dtype(series):
+        if pandas.api.types.is_categorical_dtype(series) or pandas.api.types.is_object_dtype(series):
             _write_attribute_categorical(series, fp)
         elif numpy.issubdtype(series.dtype, numpy.floating):
             fp.write("real")
@@ -110,7 +110,7 @@ _check_str_array = numpy.frompyfunc(_check_str_value, 1, 1)
 
 def _write_attribute_categorical(series, fp):
     """Write categories of a categorical/nominal attribute"""
-    if pandas.core.common.is_categorical_dtype(series.dtype):
+    if pandas.api.types.is_categorical_dtype(series.dtype):
         categories = series.cat.categories
         string_values = _check_str_array(categories)
     else:

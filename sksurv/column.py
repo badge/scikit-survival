@@ -15,7 +15,7 @@ import logging
 import numpy
 import pandas
 
-from pandas.core.common import is_categorical_dtype
+from pandas.api.types import is_categorical_dtype
 
 __all__ = ['categorical_to_numeric', 'encode_categorical', 'standardize']
 
@@ -198,4 +198,5 @@ def categorical_to_numeric(table):
     if isinstance(table, pandas.Series):
         return pandas.Series(transform(table), name=table.name, index=table.index)
     else:
+        # Raises a deprecation warning in pandas 0.23
         return table.apply(transform, axis=0, reduce=False)

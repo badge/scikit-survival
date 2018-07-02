@@ -161,7 +161,7 @@ def safe_concat(objs, *args, **kwargs):
     categories = {}
     for df in objs:
         if isinstance(df, pandas.Series):
-            if pandas.core.common.is_categorical_dtype(df.dtype):
+            if pandas.api.types.is_categorical_dtype(df.dtype):
                 categories[df.name] = {"categories": df.cat.categories, "ordered": df.cat.ordered}
         else:
             dfc = df.select_dtypes(include=["category"])

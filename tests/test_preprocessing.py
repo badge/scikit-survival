@@ -3,6 +3,8 @@ import numpy as np
 from numpy.testing import run_module_suite, TestCase
 import pandas.util.testing as tm
 
+from collections import OrderedDict
+
 from sksurv.preprocessing import OneHotEncoder
 
 
@@ -40,7 +42,7 @@ def encoded_data(data):
         else:
             expected.append((nam, col))
 
-    expected_data = pd.DataFrame.from_items(expected)
+    expected_data = pd.DataFrame.from_dict(OrderedDict(expected))
     return expected_data
 
 
