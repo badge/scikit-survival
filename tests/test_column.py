@@ -214,8 +214,8 @@ class TestEncodeCategorical(TestCase):
         rnd = numpy.random.RandomState(0)
         c = rnd.randn(len(b))
 
-        df = pandas.DataFrame({"a_binary": b,
-                               "a_number": c.copy()})
+        df = pandas.DataFrame(OrderedDict("a_binary"=b,
+                                          "a_number"=c.copy()))
 
         actual_df = column.encode_categorical(df)
 
@@ -224,8 +224,10 @@ class TestEncodeCategorical(TestCase):
             numpy.repeat([numpy.nan], 10),
             numpy.repeat([0.], 16)))
 
-        expected_df = pandas.DataFrame({"a_number": c.copy(),
-                                        "a_binary=yes": eb})
+        d = OrderedDict()
+        d['a_binary=yes'] = eb
+        d['a_number'] = c.copy()
+        expected_df = pandas.DataFrame(d)
 
         self.assertTupleEqual(actual_df.shape, expected_df.shape)
         tm.assert_frame_equal(actual_df.isnull(), expected_df.isnull())
